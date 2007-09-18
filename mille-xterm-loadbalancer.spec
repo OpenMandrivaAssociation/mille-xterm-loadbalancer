@@ -3,14 +3,14 @@
 Summary:	Load balancer for the MILLE-XTERM project
 Name:		mille-xterm-loadbalancer
 Version:	1.0
-Release:	%mkrel 0.%{svn}.1
+Release:	%mkrel 0.%{svn}.2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.revolutionlinux.com/mille-xterm
 Source:		mille-xterm-loadbalancer-%{version}.tar.bz2
-Requires:	python >= 2.4
+Patch0:		mille-xterm-loadbalancer-1.0-initscript.patch
+%py_requires -d
 BuildRequires:	perl
-BuildRequires:	python-devel >= 2.4
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 
@@ -54,6 +54,7 @@ Load balancer server
 %prep
 
 %setup -q
+%patch0 -p1
 find -type f|xargs perl -pi -e "s|\015||g;"
 
 %build 
