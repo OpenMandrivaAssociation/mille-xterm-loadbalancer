@@ -3,7 +3,7 @@
 Summary:	Load balancer for the MILLE-XTERM project
 Name:		mille-xterm-loadbalancer
 Version:	1.0
-Release:	%mkrel 0.%{svn}.2
+Release:	%mkrel 0.%{svn}.3
 License:	GPL
 Group:		System/Servers
 URL:		http://www.revolutionlinux.com/mille-xterm
