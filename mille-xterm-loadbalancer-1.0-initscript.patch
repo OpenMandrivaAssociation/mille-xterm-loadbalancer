@@ -1,0 +1,42 @@
+diff -ur mille-xterm-loadbalancer-1.0.old/src/lbagent/lbagent mille-xterm-loadbalancer-1.0/src/lbagent/lbagent
+--- mille-xterm-loadbalancer-1.0.old/src/lbagent/lbagent	2007-09-18 14:17:12.000000000 +0800
++++ mille-xterm-loadbalancer-1.0/src/lbagent/lbagent	2007-09-18 14:17:36.000000000 +0800
+@@ -34,7 +34,7 @@
+ 	pid_in_memory=`ps auwwwwx | grep "lbagent/main.py" | grep -v grep | awk '{print $2}'`
+ 
+         if [ -z "$pid_in_memory" ]; then
+-        	echo -e "Starting mille-xterm load balancer agent: \c"
++        	echo -e "Starting mille-xterm load balancer agent: "
+ 		$PY $BASEDIR/$MAIN --daemon --logfile=$LOGFILE $CONF 
+ 		sleep 2
+ 		pid_in_memory=`ps auwwwwx | grep "lbagent/main.py" | grep -v grep | awk '{print $2}'`
+@@ -51,7 +51,7 @@
+ 		
+         else
+ 		echo 
+-                echo "Mille-xterm load balancer agent is already running \c"
++                echo "Mille-xterm load balancer agent is already running "
+                 echo_failure
+                 echo
+         fi
+diff -ur mille-xterm-loadbalancer-1.0.old/src/lbserver/lbserver mille-xterm-loadbalancer-1.0/src/lbserver/lbserver
+--- mille-xterm-loadbalancer-1.0.old/src/lbserver/lbserver	2007-09-18 14:17:12.000000000 +0800
++++ mille-xterm-loadbalancer-1.0/src/lbserver/lbserver	2007-09-18 14:17:53.000000000 +0800
+@@ -34,7 +34,7 @@
+ 	pid_in_memory=`ps auwwwwx | grep "lbserver/main.py" | grep -v grep | awk '{print $2}'`
+ 
+ 	if [ -z "$pid_in_memory" ]; then
+-		echo -e "Starting mille-xterm load balancer server: \c"
++		echo -e "Starting mille-xterm load balancer server: "
+ 		$PY $BASEDIR/$MAIN --daemon --logfile=$LOGFILE $CONF 
+ 		sleep 2
+ 		pid_in_memory=`ps auwwwwx | grep "lbserver/main.py" | grep -v grep | awk '{print$2}'`
+@@ -51,7 +51,7 @@
+ 		
+         else
+ 		echo 
+-                echo "Mille-xterm load balancer server is already running \c"
++                echo "Mille-xterm load balancer server is already running "
+                 echo_failure
+                 echo
+         fi
