@@ -114,3 +114,34 @@ rm -rf %{buildroot}
 %{_datadir}/mille-xterm/lbserver/*
 
 
+
+
+%changelog
+* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 1.0-0.2137.4mdv2011.0
++ Revision: 620333
+- the mass rebuild of 2010.0 packages
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 1.0-0.2137.3mdv2010.0
++ Revision: 430031
+- rebuild
+
+* Fri Dec 21 2007 Olivier Blin <oblin@mandriva.com> 1.0-0.2137.2mdv2008.1
++ Revision: 136579
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Tue Sep 18 2007 Funda Wang <fwang@mandriva.org> 1.0-0.2137.2mdv2008.0
++ Revision: 89444
+- fix initscripts
+
+
+* Thu Feb 08 2007 Oden Eriksson <oeriksson@mandriva.com> 1.0-0.2137.1mdv2007.0
++ Revision: 117839
+- nuke the egg files
+- Import mille-xterm-loadbalancer
+
+* Fri Sep 29 2006 Oden Eriksson <oeriksson@mandriva.com> 1.0-0.2137.1mdk
+- initial Mandriva package (mille-xterm import)
+
