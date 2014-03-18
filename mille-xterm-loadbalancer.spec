@@ -3,24 +3,19 @@
 Summary:	Load balancer for the MILLE-XTERM project
 Name:		mille-xterm-loadbalancer
 Version:	1.0
-Release:	%mkrel 0.%{svn}.4
-License:	GPL
+Release:	0.%{svn}.5
+License:	GPLv2+
 Group:		System/Servers
-URL:		http://www.revolutionlinux.com/mille-xterm
-Source:		mille-xterm-loadbalancer-%{version}.tar.bz2
+Url:		http://www.revolutionlinux.com/mille-xterm
+Source0:	mille-xterm-loadbalancer-%{version}.tar.bz2
 Patch0:		mille-xterm-loadbalancer-1.0-initscript.patch
-%py_requires -d
-BuildRequires:	perl
+BuildRequires:	pkgconfig(python)
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-buildroot
-
-%define py_ver %(python -c "import sys; v=sys.version_info[:2]; print '%%d.%%d'%%v" 2>/dev/null || echo PYTHON-NOT-FOUND)
-%define py_prefix %(python -c "import sys; print sys.prefix" 2>/dev/null || echo PYTHON-NOT-FOUND)
-%define py_libdir %{py_prefix}/lib/python%{py_ver}
 
 %description
 Load balancer for the MILLE-XTERM project.
 
+#----------------------------------------------------------------------------
 
 %package -n	%{name}-common
 Summary:	Documentation and common files
@@ -29,7 +24,12 @@ Group:		System/Servers
 %description -n	%{name}-common
 Load balancer of the MILLE-XTERM project.
 
-Documentation and common files
+Documentation and common files.
+
+%files -n %{name}-common
+%doc AUTHORS Changelog COPYING doc/LoadBalancer_fr.odt doc/examples/v07_lbaconfig.xml doc/examples/v07_lbsconfig.xml INSTALL README
+
+#----------------------------------------------------------------------------
 
 %package -n	%{name}-lbagent
 Summary:	Monitoring agent
@@ -39,7 +39,20 @@ Requires:	%{name}-common
 %description -n	%{name}-lbagent
 Load balancer of the MILLE-XTERM project.
 
-Monitoring agent
+Monitoring agent.
+
+%files -n %{name}-lbagent
+%config(noreplace) %{_sysconfdir}/mille-xterm/lbaconfig.xml
+%{_initrddir}/lbagent
+%{_datadir}/mille-xterm/lbagent/*
+
+%post -n %{name}-lbagent
+chkconfig --add lbagent
+
+%preun -n %{name}-lbagent
+chkconfig --del lbagent
+
+#----------------------------------------------------------------------------
 
 %package -n	%{name}-lbserver
 Summary:	Load balancer server
@@ -49,10 +62,22 @@ Requires:	%{name}-common
 %description -n	%{name}-lbserver
 Load balancer of the MILLE-XTERM project.
 
-Load balancer server
+Load balancer server.
+
+%files -n %{name}-lbserver
+%config(noreplace) %{_sysconfdir}/mille-xterm/lbsconfig.xml
+%{_initrddir}/lbserver
+%{_datadir}/mille-xterm/lbserver/*
+
+%post -n %{name}-lbserver
+chkconfig --add lbserver
+
+%preun -n %{name}-lbserver
+chkconfig --del lbserver
+
+#----------------------------------------------------------------------------
 
 %prep
-
 %setup -q
 %patch0 -p1
 find -type f|xargs perl -pi -e "s|\015||g;"
@@ -60,8 +85,6 @@ find -type f|xargs perl -pi -e "s|\015||g;"
 %build 
 
 %install
-rm -fr %{buildroot}
-
 install -d %{buildroot}%{_initrddir}
 install -d %{buildroot}/lib/python%{py_ver}/site-packages
 
@@ -81,67 +104,4 @@ install -m0755 src/lbserver/lbserver %{buildroot}%{_initrddir}/lbserver
 # cleanup
 rm -rf %{buildroot}%{_sysconfdir}/init.d
 rm -rf %{buildroot}/lib/python%{py_ver}/site-packages
-
-%post -n %{name}-lbserver
-chkconfig --add lbserver
-
-%preun -n %{name}-lbserver
-chkconfig --del lbserver
-
-%post -n %{name}-lbagent
-chkconfig --add lbagent
-
-%preun -n %{name}-lbagent
-chkconfig --del lbagent
-
-%clean
-rm -rf %{buildroot}
-
-%files -n %{name}-common
-%defattr(-,root,root)
-%doc AUTHORS Changelog COPYING doc/LoadBalancer_fr.odt doc/examples/v07_lbaconfig.xml doc/examples/v07_lbsconfig.xml INSTALL README
-
-%files -n %{name}-lbagent
-%defattr(-,root,root)
-%config(noreplace) %{_sysconfdir}/mille-xterm/lbaconfig.xml
-%{_initrddir}/lbagent
-%{_datadir}/mille-xterm/lbagent/*
-
-%files -n %{name}-lbserver
-%defattr(-,root,root)
-%config(noreplace) %{_sysconfdir}/mille-xterm/lbsconfig.xml
-%{_initrddir}/lbserver
-%{_datadir}/mille-xterm/lbserver/*
-
-
-
-
-%changelog
-* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 1.0-0.2137.4mdv2011.0
-+ Revision: 620333
-- the mass rebuild of 2010.0 packages
-
-* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 1.0-0.2137.3mdv2010.0
-+ Revision: 430031
-- rebuild
-
-* Fri Dec 21 2007 Olivier Blin <oblin@mandriva.com> 1.0-0.2137.2mdv2008.1
-+ Revision: 136579
-- restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Tue Sep 18 2007 Funda Wang <fwang@mandriva.org> 1.0-0.2137.2mdv2008.0
-+ Revision: 89444
-- fix initscripts
-
-
-* Thu Feb 08 2007 Oden Eriksson <oeriksson@mandriva.com> 1.0-0.2137.1mdv2007.0
-+ Revision: 117839
-- nuke the egg files
-- Import mille-xterm-loadbalancer
-
-* Fri Sep 29 2006 Oden Eriksson <oeriksson@mandriva.com> 1.0-0.2137.1mdk
-- initial Mandriva package (mille-xterm import)
 
