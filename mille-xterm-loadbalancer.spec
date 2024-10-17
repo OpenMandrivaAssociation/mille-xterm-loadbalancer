@@ -6,7 +6,7 @@ Version:	1.0
 Release:	0.%{svn}.5
 License:	GPLv2+
 Group:		System/Servers
-Url:		http://www.revolutionlinux.com/mille-xterm
+Url:		https://www.revolutionlinux.com/mille-xterm
 Source0:	mille-xterm-loadbalancer-%{version}.tar.bz2
 Patch0:		mille-xterm-loadbalancer-1.0-initscript.patch
 BuildRequires:	pkgconfig(python)
